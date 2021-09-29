@@ -28,5 +28,8 @@
 	],
 	"forwardPorts": [3000, 5432],
 	"postCreateCommand": "npm install | npm run migrations:latest",
+  "postStartCommand": "/keycloak-${KC_VERSION}/bin/standalone.sh",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"
 }
