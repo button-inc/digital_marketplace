@@ -33,12 +33,12 @@
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [3000, 5432],
+	"forwardPorts": [3000, 5432, 8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "yarn install",
 	"postCreateCommand": "npm install | npm run migrations:latest",
-  "postStartCommand": "/keycloak-${KC_VERSION}/bin/standalone.sh",
+  // "postStartCommand": "/keycloak-${KC_VERSION}/bin/standalone.sh",
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"
