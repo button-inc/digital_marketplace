@@ -148,6 +148,42 @@ Then, visit the URL logged to your terminal to view the now locally-running web 
 
 You can stop (and wipe) the local PostgreSQL server by running `docker-compose down`.
 
+### Codespaces Local Startup
+
+1. Start the GitHub Codespace for the Digital Marketplace
+2. Open VS code on your machine, go to the Remote Explorer, and select the digital_marketplace codespace (build will fail initially)
+3. Copy the `sample.env` 
+```bash
+cp sample.env .env
+```
+4. Create `GitHub 0Auth` App
+```bash
+# GitHub 0Auth Values
+Name: digital_marketplace
+
+Homepage URL: https://localhost:3000 # Default back-end server address
+
+Authorization Callback URL: http://localhost:8080/auth/realms/digitalmarketplace/broker/github/endpoint # Keycloak endpoint, default URL http://localhost:8080
+```
+5. Copy Client ID value and put into .env `ID_PROVIDER_CLIENT_ID`
+6. Click to `Generate a new client secret` and copy value and put into .env `ID_PROVIDER_CLIENT_SECRET`
+7. Finish inputting required values into the .env
+```bash
+POSTGRES_URL="postgresql://digitalmarketplace:digitalmarketplace@localhost:5432/digitalmarketplace"
+
+MAILER_GMAIL_USER="fake@email.ca" # Can be any email address
+
+MAILER_GMAIL_PASS="password" # Can be any value
+```
+8. Press `Shift + CMD + p` and select `Codespaces: Rebuild Container`
+9. Start servers
+```bash
+# Terminal 1
+npm run front-end:watch # Build the front-end source code, rebuild on source changes.
+
+# Terminal 2
+npm run back-end:watch # Start the back-end server, restart on source changes.
+```
 ### NPM Scripts
 
 It is recommended that developers use the following scripts defined in `package.json` to operate this web application:
