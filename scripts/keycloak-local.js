@@ -2,7 +2,7 @@ require('dotenv').config();
 const KcAdminClient = require('@keycloak/keycloak-admin-client').default;
 
 const KEYCLOAK_URL = process.env.KEYCLOAK_URL;
-const KEYCLOAK_USERNAME = process.env.KEYCLOAK_USERNAME;
+const KEYCLOAK_USERNAME = process.env.KEYCLOAK_USER;
 const KEYCLOAK_PASSWORD = process.env.KEYCLOAK_PASSWORD;
 
 const KEYCLOAK_REALM = process.env.KEYCLOAK_REALM;
