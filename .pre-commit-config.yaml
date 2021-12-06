@@ -1,5 +1,6 @@
+repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.3.0
+  rev: v4.0.1
   hooks:
     - id: check-added-large-files
     - id: check-case-conflict
@@ -11,7 +12,7 @@
     - id: end-of-file-fixer
     - id: trailing-whitespace
 - repo: https://github.com/pre-commit/mirrors-eslint
-  rev: v8.3.0
+  rev: v8.4.0
   hooks:
   - id: eslint
     additional_dependencies: ['eslint@8.3.0','eslint-plugin-react','@typescript-eslint/eslint-plugin', 'typescript','typescript-eslint', '@typescript-eslint/parser']
