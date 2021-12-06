@@ -22,4 +22,8 @@
   hooks:
     - id: detect-secrets
       args: ["--baseline", ".secrets.baseline"]
+- repo: https://github.com/jorisroovers/gitlint
+  rev: v0.12.0
+  hooks:
+    - id: gitlint
       exclude: .*/tests/.*
