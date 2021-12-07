@@ -1,3 +1,7 @@
+- repo: https://github.com/jorisroovers/gitlint
+  rev: v0.12.0
+  hooks:
+    - id: gitlint
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v2.3.0
   hooks:
@@ -22,8 +26,4 @@
   hooks:
     - id: detect-secrets
       args: ["--baseline", ".secrets.baseline"]
-- repo: https://github.com/jorisroovers/gitlint
-  rev: v0.12.0
-  hooks:
-    - id: gitlint
       exclude: .*/tests/.*
