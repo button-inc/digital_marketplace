@@ -65,7 +65,9 @@ const Markdown: View<Props> = ({ source, box, className = '', escapeHtml = true,
           return (<img {...props} src={decodeImgSrc(props.src || '')} />);
         },
     heading: smallerHeadings
-      ? ({ level, children }: any) => { //React-Markdown types are not helpful here.
+      ? function({ level, children }: any) { //React-Markdown types are not helpful here.
+        console.log('children are',children)
+        console.log('typeof children are:',typeof children)
           return (<div className={`${headingLevelToClassName(level)} text-secondary`} children={children} />);
         }
       : ReactMarkdown.renderers.heading

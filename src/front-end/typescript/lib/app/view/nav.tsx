@@ -280,18 +280,22 @@ interface TitleProps extends Pick<Props, 'title' | 'homeDest'> {
   color?: ThemeColor;
 }
 
-const Title: View<TitleProps> = ({ title, homeDest, dispatch, color = 'c-nav-fg', className = '' }) => (
-  <div className={`nav-title ${className}`}>
-    <NavLink
-      dispatch={dispatch}
-      children={title}
-      focusable={false}
-      color={color}
-      dest={homeDest}
-      style={{ pointerEvents: homeDest ? undefined : 'none' }}
-      className='font-weight-bolder font-size-large' />
-  </div>
-);
+const Title: View<TitleProps> = function({ title, homeDest, dispatch, color = 'c-nav-fg', className = '' }) {
+  console.log('title is:',title)
+  console.log('typof title is:', typeof title)
+  return (
+    <div className={`nav-title ${className}`}>
+      <NavLink
+        dispatch={dispatch}
+        children={title}
+        focusable={false}
+        color={color}
+        dest={homeDest}
+        style={{ pointerEvents: homeDest ? undefined : 'none' }}
+        className='font-weight-bolder font-size-large' />
+    </div>
+  );
+}
 
 const MobileMenu: View<Props> = props => {
   const isMobileMenuOpen = props.state.isMobileMenuOpen;
