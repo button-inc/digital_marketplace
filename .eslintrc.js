@@ -38,5 +38,6 @@ module.exports = {
       "react/jsx-key": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "react/jsx-no-target-blank": "off",
+      "no-empty-description": "off"
   },
 };
