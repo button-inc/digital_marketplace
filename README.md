@@ -156,7 +156,7 @@ You can stop the local PostgreSQL container server by running `docker-compose do
 
 1. Start the GitHub Codespace for the Digital Marketplace
 2. Open VS code on your machine, go to the Remote Explorer, and select the digital_marketplace codespace (build will fail initially)
-3. Copy the `sample.env` 
+3. Copy the `sample.env`
 ```bash
 cp sample.env .env
 ```
