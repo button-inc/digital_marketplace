@@ -188,7 +188,7 @@ async function main() {
     }
 
   } catch (err) {
-    console.log("THIS IS THE ERROR: ", err);
+    console.log("Error: ", err);
   }
 }
 main();
