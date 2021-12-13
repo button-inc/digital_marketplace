@@ -28,20 +28,18 @@ module.exports = {
         // TODO remove rule overrides that affect code quality
       "@typescript-eslint/no-explicit-any": "off",
       "react/prop-types": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "no-useless-escape": "error",
-      "react/no-unescaped-entities": "error",
-      "no-case-declarations": "off",
-      "no-undef": "error",
-      "no-fallthrough": "error",
       "@typescript-eslint/no-var-requires": "off",
       "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/ban-types": "off",
-      "react/display-name": "error",
       "react/no-children-prop": "off",
-      "no-duplicate-case": "error",
-      "react/jsx-key": "error",
-      "@typescript-eslint/no-non-null-assertion": "off",
-      "react/jsx-no-target-blank": "off",
   },
+  overrides: [
+    {
+      // enable the rule specifically for TypeScript files
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "error"
+      }
+    }
+  ]
 };
