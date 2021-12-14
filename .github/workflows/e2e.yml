@@ -3,6 +3,11 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
+    env:
+      POSTGRES_URL: "foobar"
+      COOKIE_SECRET: "foobar"
+      MAILER_HOST: "foobar"
+      MAILER_PORT: "321"
     # stop the job if it runs over 10 minutes to prevent a hanging process from using all your CI minutes
     timeout-minutes: 10
     steps:
