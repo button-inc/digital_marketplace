@@ -2,7 +2,11 @@
 
 describe('Creates a new CWU opportunity', function() {
     beforeEach(function() {
-      cy.visit('localhost:3000')
+      // add fixture data to db
+    })
+
+    afterEach(function(){
+      // clean up db
     })
 
     // happy path
