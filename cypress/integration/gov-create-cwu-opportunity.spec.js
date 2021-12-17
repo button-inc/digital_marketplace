@@ -3,10 +3,10 @@
 describe('As a user authenticated via IDIR', function() {
     beforeEach(function() {
       // add fixture data to db
-      
+
       //logout of previous test
 
-      
+
       // login
       // cy.login();
       // changing the login method broke login on dev, so not sure if it's the URL or something with the app
@@ -25,13 +25,23 @@ describe('As a user authenticated via IDIR', function() {
       // });
 
       cy.kcLogin("cypress-gov","password")
-    
+      // cy.pause()
+      // Cypress.Cookies.preserveOnce("sid")
+      // cy.login({
+      //   root: 'https://dev.oidc.gov.bc.ca',
+      //   realm: 'p2zhow64',
+      //   username: 'cypress-gov',
+      //   password: 'password',
+      //   client_id: 'dm-auth-web',
+      //   redirect_uri: 'http://localhost:3000/',
+      // });
+      // cy.pause()
     })
 
     it('creates a new published opportunity', function() {
 
-      cy.visit("/")
-      cy.reload()
+      cy.visit("/opportunities/create")
+      cy.get("Read Guide").should('be.visible')
 
       // visit http://localhost:3000/opportunities/create
       // click get started on cwu card
