@@ -135,6 +135,51 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
           return makeAuthErrorRedirect(request);
         }
       })
+    },
+    /// ENDPOINT FOR TESTING ONLY
+    {
+      method: ServerHttpMethod.Get,
+      path: '/auth/createsession',
+      // @ts-ignore
+      handler: nullRequestBodyHandler(async request => {
+        try {
+          const userType = UserType.Government; // Add a check for gov vs. admin as test suite expands
+          const idpId = 'test-gov' // Add a check for gov vs. admin as test suite expands
+          const dbResult = await findOneUserByTypeAndIdp(connection, userType, idpId);
+          if (isInvalid(dbResult)) {
+            makeAuthErrorRedirect(request);
+          }
+          const user = dbResult.value as User | null;
+
+          if (!user) {
+            console.log('Error: Test user does not exist in database')
+            return;
+          }
+          const result = await createSession(connection, {
+            user: user && user.id,
+            accessToken: '' // This token isn't required anywhere
+          });
+          if (isInvalid(result)) {
+            makeAuthErrorRedirect(request);
+            return null;
+          }
+
+          const session = result.value;
+
+          const signinCompleteLocation = prefixPath('/dashboard');
+          return {
+            code: 302,
+            headers: {
+              'Location': signinCompleteLocation
+            },
+            session,
+            body: makeTextResponseBody('')
+          };
+        } catch (error) {
+          request.logger.error('authentication failed', makeErrorResponseBody(error));
+          return makeAuthErrorRedirect(request);
+        }
+      })
     }
   ];
   return router;
@@ -145,6 +190,8 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
 async function establishSessionWithClaims(connection: Connection, request: Request<any, Session>, tokenSet: TokenSet) {
   const claims = tokenSet.claims();
   let userType: UserType;
+  // if server started with cypress env variable, fetch the loginsource from the request cookies instead of getting from keycloak
+  // or request test IDIR/github dummy account
   const identityProvider = getString(claims, 'loginSource');
   switch (identityProvider) {
     case GOV_IDP_SUFFIX.toUpperCase(): {
