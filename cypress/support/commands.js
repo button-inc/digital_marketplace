@@ -119,7 +119,7 @@ Cypress.Commands.add('kcLogin', (username, password) => {
     const kcRoot = 'https://dev.oidc.gov.bc.ca';
     const kcRealm = 'p2zhow64';
     const kcClient = 'dm-auth-web';
-    const kcRedirectUri = 'http://localhost:3000/opportunities/create';
+    const kcRedirectUri = 'http://localhost:3000/auth/callback';
     const loginPageRequest = {
       url: `${kcRoot}/auth/realms/${kcRealm}/protocol/openid-connect/auth`,
       qs: {
@@ -133,7 +133,7 @@ Cypress.Commands.add('kcLogin', (username, password) => {
       }
     };
     // Open the KC login page, fill in the form with username and password and submit.
-    return cy.request(loginPageRequest)
+    return cy.request("/auth/sign-in")
       .then(submitLoginForm);
     ////////////
     function submitLoginForm(response) {
