@@ -12,6 +12,7 @@ describe('Authenticate with Github', function() {
     it('signs into the app using Github authentication', function() {
         cy.visit("/sign-in")
         cy.contains("Using GitHub").click()
+        // add these variables to the cypress open/run command
         cy.get('#login_field').type(CYPRESS_GITHUB_USERNAME)
         cy.get('#password').type(CYPRESS_GITHUB_PASSWORD)
         cy.get('input').contains('Sign in').click()

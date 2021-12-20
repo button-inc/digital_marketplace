@@ -24,28 +24,28 @@ describe('As a user authenticated via IDIR', function() {
       //   },
       // });
 
-      // cy.kcLogin("cypress-gov","password")
       // cy.setCookie('fakecookie', '123key')
 
       // cy.pause()
-      Cypress.Cookies.debug(true)
-      cy.setCookie('coookie_on','on')
+      // Cypress.Cookies.debug(true)
+      // cy.setCookie('coookie_on','on')
+      // cy.kcLogin("cypress-gov","password")
       // Cypress.Cookies.preserveOnce("sid")
-      cy.login({
-        root: 'https://dev.oidc.gov.bc.ca',
-        realm: 'p2zhow64',
-        username: 'cypress-gov',
-        password: 'password',
-        client_id: 'dm-auth-web',
-        redirect_uri: 'http://localhost:3000/auth/callback',
-      });
-      cy.setCookie('coookie_off','off')
+      // cy.login({
+      //   root: 'https://dev.oidc.gov.bc.ca',
+      //   realm: 'p2zhow64',
+      //   username: 'cypress-gov',
+      //   password: 'password',
+      //   client_id: 'dm-auth-web',
+      //   redirect_uri: 'http://localhost:3000/auth/callback',
+      // });
+      // cy.setCookie('coookie_off','off')
     })
 
     it('creates a new published opportunity', function() {
-
-      // cy.visit("/opportunities/create")
-      cy.visit("auth/callback")
+      cy.visit('auth/createsession')
+      cy.visit("/opportunities/create")
+      // cy.visit("auth/callback")
       cy.get("Read Guide").should('be.visible')
 
       // visit http://localhost:3000/opportunities/create
