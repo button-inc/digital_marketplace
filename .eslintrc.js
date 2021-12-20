@@ -33,6 +33,7 @@ module.exports = {
       "@typescript-eslint/no-empty-function": "off",
       "@typescript-eslint/ban-types": "off",
       "react/no-children-prop": "off",
+      "@typescript-eslint/ban-ts-comment": "warn"
   },
   overrides: [
     {

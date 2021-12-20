@@ -140,6 +140,7 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
     {
       method: ServerHttpMethod.Get,
       path: '/auth/createsession',
+      // @ts-ignore
       handler: nullRequestBodyHandler(async request => {
         try {
           // // Retrieve authorization code and redirect
@@ -176,7 +177,9 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
 
           //THIS COMES FROM ESTABLISHCLAIMS FUNCTION
           const userType = UserType.Government; // for now, tests assume all IDIR logins are regular gov users. Later, set up a way to hangle admin gov users
-          const idpId = getString('idp_id', 'idp_id'); // could be wrong
+          // const idpId = getString('fake', 'idp_id'); // could be wrong
+          const idpId = 'fake'
+          console.log('idpId is:',idpId)
           const dbResult = await findOneUserByTypeAndIdp(connection, userType, idpId);
           if (isInvalid(dbResult)) {
             makeAuthErrorRedirect(request);
@@ -219,10 +222,9 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
             console.log('Error: Test user does not exist in database')
             return;
           }
-
           const result = await createSession(connection, {
             user: user && user.id,
-            accessToken: tokenSet.refresh_token
+            accessToken: '' //not used anywhere
           });
           if (isInvalid(result)) {
             makeAuthErrorRedirect(request);
