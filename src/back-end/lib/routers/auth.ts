@@ -135,6 +135,119 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
           return makeAuthErrorRedirect(request);
         }
       })
+    },
+    /// ENDPOINT FOR TESTING ONLY
+    {
+      method: ServerHttpMethod.Get,
+      path: '/auth/createsession',
+      handler: nullRequestBodyHandler(async request => {
+        try {
+          // // Retrieve authorization code and redirect
+          // const { code, redirectOnSuccess } = request.query;
+
+          // // Use auth code to retrieve token asynchronously
+          // const data: KeyCloakTokenRequestData = {
+          //   code,
+          //   grant_type: 'authorization_code',
+          //   client_id: KEYCLOAK_CLIENT_ID,
+          //   client_secret: KEYCLOAK_CLIENT_SECRET,
+          //   scope: 'openid',
+          //   redirect_uri: prefixPath('auth/callback')
+          // };
+
+          // // If redirectOnSuccess was provided on callback, this must also be provided on token request (redirect_uri must match for each request)
+          // if (redirectOnSuccess) {
+          //   data.redirect_uri += `?redirectOnSuccess=${redirectOnSuccess}`;
+          // }
+
+          // const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+          // // data as any --> pacify the compiler
+          // const response = await httpRequest(ClientHttpMethod.Post, `${KEYCLOAK_URL}/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token`, qs.stringify(data as any), headers);
+
+          // if (response.status !== 200) {
+          //   return makeAuthErrorRedirect(request);
+          // }
+
+          // const tokenSet = new TokenSet(response.data as TokenSetParameters);
+          // const { session, existingUser } = await establishSessionWithClaims(connection, request, tokenSet) || {};
+          // if (!session) {
+          //   throw new Error('unable to create session');
+          // }
+
+          //THIS COMES FROM ESTABLISHCLAIMS FUNCTION
+          const userType = UserType.Government; // for now, tests assume all IDIR logins are regular gov users. Later, set up a way to hangle admin gov users
+          const idpId = getString('idp_id', 'idp_id'); // could be wrong
+          const dbResult = await findOneUserByTypeAndIdp(connection, userType, idpId);
+          if (isInvalid(dbResult)) {
+            makeAuthErrorRedirect(request);
+          }
+          const user = dbResult.value as User | null;
+          console.log('user is:',user)
+          // if (!user) {
+          //   user = getValidValue(await createUser(connection, {
+          //     idpId,
+          //     type: userType,
+          //     status: UserStatus.Active,
+          //     name: claims.name || '',
+          //     email: claims.email || null,
+          //     jobTitle: '',
+          //     idpUsername: username
+          //   }), null);
+
+            // If email present, notify of successful account creation
+          //   if (user && user.email) {
+          //     userAccountRegistered(user);
+          //   }
+          // } else if (user.status === UserStatus.InactiveByUser) {
+          //   const { id } = user;
+          //   const dbResult = await updateUser(connection, { id, status: UserStatus.Active });
+          //   // // Send notification
+          //   if (isValid(dbResult)) {
+          //     accountReactivatedSelf(dbResult.value);
+          //   }
+          // } else if (user.status === UserStatus.InactiveByAdmin) {
+          //   makeAuthErrorRedirect(request);
+          //   return null;
+          // }
+
+          // if (!user) {
+          //   makeAuthErrorRedirect(request);
+          //   return null;
+          // }
+
+          if (!user) {
+            console.log('Error: Test user does not exist in database')
+            return;
+          }
+
+          const result = await createSession(connection, {
+            user: user && user.id,
+            accessToken: tokenSet.refresh_token
+          });
+          if (isInvalid(result)) {
+            makeAuthErrorRedirect(request);
+            return null;
+          }
+
+          const session = result.value;
+
+
+        //EXCERPT FROM ESTABLISH CLAIMS ENDS
+
+          const signinCompleteLocation = prefixPath('/dashboard');
+          return {
+            code: 302,
+            headers: {
+              'Location': signinCompleteLocation
+            },
+            session,
+            body: makeTextResponseBody('')
+          };
+        } catch (error) {
+          request.logger.error('authentication failed', makeErrorResponseBody(error));
+          return makeAuthErrorRedirect(request);
+        }
+      })
     }
   ];
   return router;
@@ -145,6 +258,8 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
 async function establishSessionWithClaims(connection: Connection, request: Request<any, Session>, tokenSet: TokenSet) {
   const claims = tokenSet.claims();
   let userType: UserType;
+  // if server started with cypress env variable, fetch the loginsource from the request cookies instead of getting from keycloak
+  // or request test IDIR/github dummy account
   const identityProvider = getString(claims, 'loginSource');
   switch (identityProvider) {
     case GOV_IDP_SUFFIX.toUpperCase(): {
