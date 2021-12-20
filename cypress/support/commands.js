@@ -37,7 +37,7 @@
 // //     })
 // //   })
 
-// import 'cypress-keycloak';
+import 'cypress-keycloak';
 
 
 // Cypress.Commands.add('kcLogin', (username, password) => {
@@ -101,10 +101,10 @@
 //           followRedirect: false,
 //           body: {
 //             username: username,
-//             password: password        
+//             password: password
 //           }
 //         });
-        
+
 
 //     }
 //     // Open the KC login page, fill in the form with username and password and submit.
@@ -152,11 +152,11 @@ Cypress.Commands.add('kcLogin', (username, password) => {
         followRedirect: true,
         body: {
           username: username,
-          password: password        
+          password: password
         }
       });
     }
-    // Copy-pasted code from KC javascript client. It probably doesn't need to be 
+    // Copy-pasted code from KC javascript client. It probably doesn't need to be
     // this complicated but I refused to spend time on figuring that out.
     function createUUID() {
       var s = [];
