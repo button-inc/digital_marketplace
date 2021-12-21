@@ -44,10 +44,8 @@ describe('As a user authenticated via IDIR', function() {
 
         // After opportunity has been created
         cy.contains('Draft Opportunity Saved').should('be.visible')
-        cy.visit('/dashboard')
-        cy.contains('Cypress Opp').click()
-        //click into it
 
+        //Confirm entered data exists
         // 1. Overview tab
         cy.get('#cwu-opportunity-title').should('have.value', 'Cypress Opp')
         cy.get('#cwu-opportunity-teaser').should('have.value','Teaser text')
