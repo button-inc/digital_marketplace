@@ -2,6 +2,8 @@
 
 describe('As a user authenticated via IDIR', function() {
     beforeEach(function() {
+        // add test user fixutre
+        // clean up db fixture
         cy.visit('auth/createsession')
         Cypress.Cookies.preserveOnce("sid")
     })
@@ -27,28 +29,24 @@ describe('As a user authenticated via IDIR', function() {
         cy.contains('Next').click()
 
         // 3. Details tab
-        cy.get('#cwu-opportunity-proposal-deadline').type('2050-01-31')
-        cy.get('#cwu-opportunity-assignment-date').type('2050-02-28')
-        cy.get('#cwu-opportunity-start-date').type('2050-03-31')
-        cy.pause()
-        cy.get('#cwu-opportunity-completion-date').type('2050-04-30')
-        cy.pause()
+        cy.get('#cwu-opportunity-proposal-deadline').type('2030-01-31')
+        cy.get('#cwu-opportunity-assignment-date').type('2030-02-28')
+        cy.get('#cwu-opportunity-start-date').type('2030-03-31')
+        cy.get('#cwu-opportunity-completion-date').type('2030-04-30')
         cy.get('#cwu-opportunity-submission-info').type('github repo')
         cy.get('#cwu-opportunity-acceptance-criteria').type('Some acceptance criteria')
         cy.get('#cwu-opportunity-evaluation-criteria').type('Some evaluation criteria')
         cy.contains('Next').click()
         // 4. Attachments tab
-        // cy.route({
-        //     method: 'POST',
-        //     url: /upload_endpoint/
-        //   }).as('upload');
-        const fixtureFile = 'jairo-alzate-sssxyuZape8-unsplash.jpg';
-        cy.contains('Add Attachment').attachFile(fixtureFile);
-        // cy.wait('@upload', { requestTimeout: 120000 });
+        const fixtureFile = 'Screenshot.png';
+        cy.get('[type=file]').attachFile(fixtureFile);
         cy.contains('Save Draft').click({force: true});
 
         // After opportunity has been created
         cy.contains('Draft Opportunity Saved').should('be.visible')
+        cy.visit('/dashboard')
+        cy.contains('Cypress Opp').click()
+        //click into it
 
         // 1. Overview tab
         cy.get('#cwu-opportunity-title').should('have.value', 'Cypress Opp')
@@ -66,42 +64,16 @@ describe('As a user authenticated via IDIR', function() {
         cy.contains('Next').click()
 
         // 3. Details tab
-        cy.get('#cwu-opportunity-proposal-deadline').should('have.value','2050-01-31')
-        cy.get('#cwu-opportunity-assignment-date').should('have.value','2050-02-28')
-        cy.get('#cwu-opportunity-start-date').should('have.value','2050-03-31')
-        cy.get('#cwu-opportunity-completion-date').should('have.value','2050-04-30')
+        cy.get('#cwu-opportunity-proposal-deadline').should('have.value','2030-01-31')
+        cy.get('#cwu-opportunity-assignment-date').should('have.value','2030-02-28')
+        cy.get('#cwu-opportunity-start-date').should('have.value','2030-03-31')
+        cy.get('#cwu-opportunity-completion-date').should('have.value','2030-04-30')
         cy.get('#cwu-opportunity-submission-info').should('have.value','github repo')
         cy.get('#cwu-opportunity-acceptance-criteria').should('have.value','Some acceptance criteria')
         cy.get('#cwu-opportunity-evaluation-criteria').should('have.value','Some evaluation criteria')
         cy.contains('Next').click()
         // 4. Attachments tab
-
-
-
-        // cy.contains('Agile').click({force: true})
-        // cy.contains('Next').click()
-
-
-        // cy.contains('').should('be.visible')
-        // cy.contains('').should('be.visible')
-        // cy.contains('').should('be.visible')
-
-
-
-
-      // fill out form, click next button, repeat for all tabs
-      // save draft
-      // visit dashboard
-      // click on opportunity
-      // confirm all data is present
-      // click actions dropdown
-      // click submit
-      // in modal, check boxes to acknowledge reading terms and conditions
-      //click submit
-      // visit https://localhost:3000/opportunities
-      // click opportunity
-      // confirm all data is present
-      // cy.getCookie('mocks.auth').should('have.property', 'value', 'admin')
+        cy.get('[type=text]').should('have.value','Screenshot.png')
     })
 
 
