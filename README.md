@@ -115,6 +115,7 @@ If you are not using Nix, please ensure the following packages have been install
 - SASS
 - Docker
 - Docker Compose 3.x
+- Postgres
 
 Once installed, `cd` into this repository's root directory and proceed to install NPM dependencies:
 
@@ -124,28 +125,32 @@ npm install
 
 ### Containerized Quick Start
 
-If a local environment needs to be spun up to demo or test the app, the commands `docker-compose build` followed by `docker-compose up` will build and start the app and database in local containers. However, changes to the codebase will not be reflected in the app until the build command is re-run. This slow turn around makes local development using docker a less desirable approach.
+If a local environment needs to be spun up to demo or test the app, the commands `docker-compose build` followed by `docker-compose up` will build and start the app and PostgreSQL database in local containers. However, changes to the codebase will not be reflected in the app until the build command is re-run. This slow turn around makes local development using docker a less desirable approach.
+
+You can stop the PostgreSQL container by running `docker-compose down`. If you wish to completely wipe the container database, including all the data added by the migrations, run `docker volume rm digital_marketplace_dm-vol`.
 
 ### Local Development Environment
 
-Open three terminals and run the following commands:
+To create the database, start postgres on port 5432 (default) and run the following commands:
+```bash
+createdb digitalmarketplace # Create a local database
+psql digitalmarketplace # Enter the psql shell
+create user digitalmarketplace with password 'digitalmarketplace'; # Create a user and password for the database
+```
+
+Exit the psql shell and run `npm run migrations:latest`
+
+To start the app, open two terminals and run the following commands:
 
 ```bash
 # Terminal 1
-docker-compose up -d # Start the app and a PostgreSQL server in containers in the background.
-npm run migrations:latest # Run all database migrations.
-docker stop dm_app # Stop the app container so it doesn't interfere with the next two terminals.
-
-# Terminal 2
 npm run back-end:watch # Start the back-end server, restart on source changes.
 
-# Terminal 3
+# Terminal 2
 npm run front-end:watch # Build the front-end source code, rebuild on source changes.
 ```
 
 Then, visit the URL logged to your terminal to view the now locally-running web application.
-
-You can stop the local PostgreSQL container server by running `docker-compose down`. If you wish to completely wipe the container database, including all the data added by the migrations, run `docker volume rm digital_marketplace_dm-vol`.
 
 ### NPM Scripts
 
@@ -159,6 +164,8 @@ npm run <SCRIPT_NAME>
 | Script Name                             | Description                                                                                                                                                   |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `build`                                 | Builds the back- and front-ends.                                                                                                                                    |
+| `cypress:test`                          | Starts the app and runs Cypress tests. NOTE: The test set up and clean up will wipe and recreate the local database.                                          |
+| `cypress:open`                          | Opens the interactive Cypress test runner. NOTE: The test set up and clean up will wipe and recreate the local database.                                      |
 | `start`                                 | Runs the back-end server.                                                                                                                                     |
 | `front-end:lint`                        | Lints the front-end source code using tslint.                                                                                                                 |
 | `front-end:typecheck`                   | Typechecks the front-end source code using tsc.                                                                                                               |
