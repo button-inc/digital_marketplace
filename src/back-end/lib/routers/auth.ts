@@ -136,8 +136,9 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
         }
       })
     },
-    /// ENDPOINT FOR TESTING ONLY
-    {
+    // /auth/createsession is for testing only, so only exists outside of production
+    // @ts-ignore
+    ...(process.env.NODE_ENV === 'development' ? [{
       method: ServerHttpMethod.Get,
       path: '/auth/createsession',
       // @ts-ignore
@@ -147,6 +148,7 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
           const idpId = 'test-gov' // Add a check for gov vs. admin as test suite expands
           const dbResult = await findOneUserByTypeAndIdp(connection, userType, idpId);
           if (isInvalid(dbResult)) {
+           // @ts-ignore
             makeAuthErrorRedirect(request);
           }
           const user = dbResult.value as User | null;
@@ -160,6 +162,7 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
             accessToken: '' // This token isn't required anywhere
           });
           if (isInvalid(result)) {
+            // @ts-ignore
             makeAuthErrorRedirect(request);
             return null;
           }
@@ -177,11 +180,13 @@ async function makeRouter(connection: Connection): Promise<Router<any, any, any,
           };
         } catch (error) {
           request.logger.error('authentication failed', makeErrorResponseBody(error));
+          // @ts-ignore
           return makeAuthErrorRedirect(request);
         }
       })
-    }
+    }] : []),
   ];
+  console.log('router is',router)
   return router;
 }
 
