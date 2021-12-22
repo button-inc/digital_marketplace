@@ -4,7 +4,7 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     env:
-      # POSTGRES_URL: "postgresql://digitalmarketplace:digitalmarketplace@localhost:5432/digitalmarketplace"
+      POSTGRES_URL: "postgresql://digitalmarketplace:digitalmarketplace@localhost:5432/digitalmarketplace"
       COOKIE_SECRET: "foobar"
       MAILER_HOST: "foobar"
       MAILER_PORT: "321"
