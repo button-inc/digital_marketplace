@@ -4,7 +4,7 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     env:
-      POSTGRES_URL: "foobar"
+      POSTGRES_URL: "postgresql://digitalmarketplace:digitalmarketplace@localhost:5432/digitalmarketplace"
       COOKIE_SECRET: "foobar"
       MAILER_HOST: "foobar"
       MAILER_PORT: "321"
@@ -23,7 +23,9 @@ jobs:
           # POSTGRES_USER: "digitalmarketplace"
           # POSTGRES_PASSWORD: "digitalmarketplace"
           # POSTGRES_DB: "digitalmarketplace"
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: digitalmarketplace
+          POSTGRES_PASSWORD: digitalmarketplace
+          POSTGRES_DB: digitalmarketplace
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
