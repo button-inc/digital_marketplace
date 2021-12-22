@@ -53,10 +53,10 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
-        env:
-          - POSTGRES_USER: digitalmarketplace
-          - POSTGRES_PASSWORD: digitalmarketplace
-          - POSTGRES_DB: digitalmarketplace
+        # env:
+        #   - POSTGRES_USER: digitalmarketplace
+        #   - POSTGRES_PASSWORD: digitalmarketplace
+        #   - POSTGRES_DB: digitalmarketplace
         with:
           build: npm run build
           start: npm run migrations:latest,npm run start
