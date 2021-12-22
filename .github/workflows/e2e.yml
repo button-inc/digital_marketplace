@@ -32,26 +32,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm ci
+      # - name: Install dependencies
+      #   run: npm ci
 
-      - name: Connect to PostgreSQL
-        run: npm run migrations:latest
-        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
-          POSTGRES_PASSWORD: postgres
+      # - name: Connect to PostgreSQL
+      #   run: npm run migrations:latest
+      #   # Environment variables used by the `client.js` script to create a new PostgreSQL table.
+      #   env:
+      #     # The hostname used to communicate with the PostgreSQL service container
+      #     POSTGRES_HOST: postgres
+      #     # The default PostgreSQL port
+      #     POSTGRES_PORT: 5432
+      #     POSTGRES_PASSWORD: postgres
 
-      - name: Cypress
-        run: npm ./node_modules/.bin/cypress run
+      # - name: Cypress
+      #   run: npm ./node_modules/.bin/cypress run
+
+
         # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
-      # - name: Cypress run
-      #   uses: cypress-io/github-action@v2
-      #   with:
-      #     build: npm run build
-      #     start: npm run migrations,npm run start
-      #     wait-on: 'http://localhost:3000'
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm run migrations,npm run start
+          wait-on: 'http://localhost:3000'
