@@ -58,7 +58,7 @@ describe('As a user authenticated via IDIR', function() {
         cy.get('#cwu-opportunity-remote-desc').should('have.value','Remote description text')
         cy.get('#cwu-opportunity-location').should('have.value','Vancouver')
         cy.get('#cwu-opportunity-reward').should('have.value','5000')
-        cy.contains('Agile').should('be.visible') // weak
+        cy.get('#cwu-opportunity-skills').contains('Agile').should('have.text', 'Agile')
         cy.contains('Next').click()
 
         // 2. Description tab
