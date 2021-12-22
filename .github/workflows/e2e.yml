@@ -54,9 +54,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
-          - POSTGRES_USER: postgres
-          - POSTGRES_PASSWORD: digitalmarketplace
-          - POSTGRES_DB: digitalmarketplace
+          POSTGRES_PASSWORD: postgres
         with:
           build: npm run build
           start: npm run migrations:latest,npm run start
