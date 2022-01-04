@@ -7,7 +7,8 @@ describe('As a user authenticated via IDIR', function() {
         // cy.exec('docker ps')
         // cy.exec('docker exec db dropdb -f --if-exists digitalmarketplace')
         // set up db
-        cy.exec('psql -c "CREATE DATABASE digitalmarketplace')
+        // cy.exec('psql -c "CREATE DATABASE digitalmarketplace"')
+        cy.exec('createdb digitalmarketplace')
         cy.exec('npm run migrations:latest;')
         cy.exec('psql digitalmarketplace -f ./cypress/fixtures/users.sql')
         cy.visit('auth/createsession')
