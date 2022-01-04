@@ -4,12 +4,10 @@
     "viewportWidth": 1200,
     "viewportHeight": 870,
     "env":{
-        "DB": {
-            "user": "digitalmarketplace",
-            "host": "http://localhost:5432",
-            "database": "digitalmarketplace",
-            "password": "digitalmarketplace",
-            "port": 5432
-        }
+        "POSTGRES_USER": "digitalmarketplace",
+        "POSTGRES_PASSWORD": "digitalmarketplace",
+        "POSTGRES_DB": "digitalmarketplace",
+        "POSTGRES_HOST": "postgres",
+        "POSTGRES_PORT": "5432"
       }
 }
