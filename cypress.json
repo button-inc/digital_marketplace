@@ -13,6 +13,7 @@
         "PGPASSWORD": "digitalmarketplace",
         "PGDB": "digitalmarketplace",
         "PGHOST": "http://localhost:5432",
-        "PGPORT": "5432"
+        "PGPORT": "5432",
+        "POSTGRES_URL": "postgresql://digitalmarketplace:digitalmarketplace@localhost:5432/digitalmarketplace"
       }
 }
