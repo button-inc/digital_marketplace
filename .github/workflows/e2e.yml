@@ -38,6 +38,7 @@ jobs:
         env:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
+          PGHOST: localhost
         with:
           build: npm run build
           start: npm run migrations:latest,npm run start
