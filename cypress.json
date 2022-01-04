@@ -8,11 +8,6 @@
         "POSTGRES_PASSWORD": "digitalmarketplace",
         "POSTGRES_DB": "digitalmarketplace",
         "POSTGRES_HOST": "postgres",
-        "POSTGRES_PORT": "5432",
-        "PGUSER": "digitalmarketplace",
-        "PGPASSWORD": "digitalmarketplace",
-        "PGDB": "digitalmarketplace",
-        "PGHOST": "postgres",
-        "PGPORT": "5432"
+        "POSTGRES_PORT": "5432"
       }
 }
