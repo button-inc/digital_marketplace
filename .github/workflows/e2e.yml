@@ -49,4 +49,4 @@ jobs:
         if: failure()
         with:
             name: cypress-snapshots
-            path: cypress/snapshots
+            path: /home/runner/work/digital_marketplace/digital_marketplace/cypress/screenshots/
