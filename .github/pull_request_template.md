@@ -1,4 +1,4 @@
-This PR addresses issue: [issue #]
+This PR closes #
 
 Includes tests? [Y/N]
 Rebased on main address to conflicts? [Y/N]
