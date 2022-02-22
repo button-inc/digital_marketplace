@@ -1,8 +1,9 @@
-This PR addresses issue: [issue #]
+This PR closes #
 
-Includes tests? [Y/N]
-Rebased on main address to conflicts? [Y/N]
-Updated docs? [Y/N]
+- [ ] Includes tests?
+- [ ] Rebased on main address to conflicts?
+- [ ] Updated docs?
+- [ ] No console logs or unnecessary comments?
 
 Proposed changes:
 -
