@@ -1,12 +1,13 @@
-FROM --platform=linux/amd64 docker.io/node:14
+FROM --platform=linux/amd64 docker.io/node:16
 WORKDIR /usr/app
 COPY ./src /usr/app/src
 COPY package*.json ./
 COPY gruntfile.js ./
 COPY ./grunt-configs ./grunt-configs
 COPY tsconfig.json ./
+COPY yarn.lock ./
 
-RUN npm install
+RUN yarn install
 RUN npm run front-end:build
 RUN npm run back-end:build
 RUN chmod -R 775 /usr/app
